@@ -1,32 +1,45 @@
-# Portal de Gestión de Procesos — Migración paso 1
+# Portal de Gestión de Procesos — Migración Paso 3
 
-Objetivo de este paso: separar frontend y backend y validar la comunicación local mediante `/api/health`.
+Objetivo: validar autenticación por token y roles antes de migrar los módulos funcionales.
 
 ## Backend
 
-```bash
+```powershell
 cd backend
 python -m venv .venv
-# Windows PowerShell:
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+Copy-Item .env.example .env
+flask --app app init-db
+flask --app app create-admin
 python app.py
 ```
 
-Probar: `http://127.0.0.1:8000/api/health`
+Endpoints de prueba:
+
+- `GET http://127.0.0.1:8000/api/health`
+- `GET http://127.0.0.1:8000/api/health/db`
+- `POST http://127.0.0.1:8000/api/auth/login`
+- `GET http://127.0.0.1:8000/api/auth/me` (Bearer token)
+- `GET http://127.0.0.1:8000/api/auth/admin-check` (solo administrador)
 
 ## Frontend
 
-Abrir otra terminal desde la raíz:
+En otra terminal, desde la raíz:
 
-```bash
+```powershell
 python -m http.server 5500 --directory docs
 ```
 
-Abrir: `http://127.0.0.1:5500`
+Abrir:
 
-El frontend debe mostrar `Backend conectado ✅`.
+`http://127.0.0.1:5500`
 
-## Siguiente paso
+El token se guarda en `sessionStorage`, por lo que se elimina al cerrar la sesión del navegador mediante el botón del portal o al limpiar el almacenamiento de la pestaña/sesión.
 
-Migrar autenticación a API y posteriormente Áreas, Procesos, Documentos y Dashboard.
+## Próximo paso
+
+Migrar CRUD y vistas del módulo **Áreas** a endpoints JSON + GitHub Pages.
+
+
+> Compatibilidad: el rol de solo lectura se conserva internamente como `usuario`, igual que en el proyecto original; funcionalmente corresponde al perfil de consulta.
