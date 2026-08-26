@@ -1,9 +1,18 @@
-# Portal de Gestión de Procesos — Migración Paso 3
+# Portal Gestión de Procesos REFAX — Migración hasta Paso 8
 
-Objetivo: validar autenticación por token y roles antes de migrar los módulos funcionales.
+Arquitectura objetivo: **GitHub Pages (frontend) → Flask API en Azure App Service → Azure Database for MySQL Flexible Server**.
 
-## Backend
+## Incluido
+- Paso 1: frontend ↔ API + `/api/health`
+- Paso 2: SQLAlchemy, modelos y conexión preparada para MySQL
+- Paso 3: login JWT + roles `administrador` / `usuario`
+- Paso 4: Áreas (listar, buscar, crear, editar, eliminar)
+- Paso 5: Procesos (listar, filtrar, críticos, crear, editar, eliminar)
+- Paso 6: Documentos (listar, filtrar, enlaces, crear, editar, eliminar)
+- Paso 7: Dashboard real con KPIs y resúmenes
+- Paso 8: Reportes consolidados e impresión/PDF desde navegador
 
+## Ejecutar local
 ```powershell
 cd backend
 python -m venv .venv
@@ -15,31 +24,18 @@ flask --app app create-admin
 python app.py
 ```
 
-Endpoints de prueba:
-
-- `GET http://127.0.0.1:8000/api/health`
-- `GET http://127.0.0.1:8000/api/health/db`
-- `POST http://127.0.0.1:8000/api/auth/login`
-- `GET http://127.0.0.1:8000/api/auth/me` (Bearer token)
-- `GET http://127.0.0.1:8000/api/auth/admin-check` (solo administrador)
-
-## Frontend
-
 En otra terminal, desde la raíz:
-
 ```powershell
 python -m http.server 5500 --directory docs
 ```
+Abrir `http://127.0.0.1:5500`.
 
-Abrir:
+## Health checks
+- `http://127.0.0.1:8000/api/health`
+- `http://127.0.0.1:8000/api/health/db`
 
-`http://127.0.0.1:5500`
+## MySQL
+Localmente se usa SQLite si `DATABASE_URL` está vacío. Para Azure MySQL, establecer una URL compatible con SQLAlchemy/PyMySQL en `DATABASE_URL`.
 
-El token se guarda en `sessionStorage`, por lo que se elimina al cerrar la sesión del navegador mediante el botón del portal o al limpiar el almacenamiento de la pestaña/sesión.
-
-## Próximo paso
-
-Migrar CRUD y vistas del módulo **Áreas** a endpoints JSON + GitHub Pages.
-
-
-> Compatibilidad: el rol de solo lectura se conserva internamente como `usuario`, igual que en el proyecto original; funcionalmente corresponde al perfil de consulta.
+## Importante
+Esta versión migra primero los campos funcionales del modelo original. Los campos nuevos que estaban visibles en algunas plantillas antiguas pero no existían en el modelo se incorporarán después de estabilizar la migración a Azure.

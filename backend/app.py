@@ -7,6 +7,11 @@ from extensions import db
 from models import Usuario
 from routes.auth import auth_bp
 from routes.health import health_bp
+from routes.areas import areas_bp
+from routes.procesos import procesos_bp
+from routes.documentos import documentos_bp
+from routes.dashboard import dashboard_bp
+from routes.reportes import reportes_bp
 
 # Importar modelos registra las tablas en SQLAlchemy.
 import models  # noqa: F401, E402
@@ -31,6 +36,11 @@ def create_app():
 
     app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(areas_bp)
+    app.register_blueprint(procesos_bp)
+    app.register_blueprint(documentos_bp)
+    app.register_blueprint(dashboard_bp)
+    app.register_blueprint(reportes_bp)
 
     @app.get("/")
     def root():
