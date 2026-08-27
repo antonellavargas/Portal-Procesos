@@ -60,6 +60,43 @@ def create_app():
         db.create_all()
         click.echo("Base de datos inicializada correctamente.")
 
+    @app.cli.command("import-excel")
+    @click.option(
+        "--archivo",
+        type=click.Path(exists=True, dir_okay=False, path_type=str),
+        default=None,
+        help="Ruta opcional a un Excel .xlsx. Si se omite usa backend/data/Plantilla_Procesos_Refax.xlsx.",
+    )
+    def import_excel_command(archivo):
+        """Importa o actualiza Áreas, Procesos y Documentos desde Excel."""
+        from services.importador_excel import importar_excel
+
+        db.create_all()
+        try:
+            resultado = importar_excel(archivo)
+        except Exception as error:
+            raise click.ClickException(str(error)) from error
+
+        click.echo("Importación completada correctamente.")
+        click.echo(
+            "Áreas: "
+            f"{resultado['areas']['creadas']} creadas, "
+            f"{resultado['areas']['actualizadas']} actualizadas, "
+            f"{resultado['areas']['omitidas']} omitidas."
+        )
+        click.echo(
+            "Procesos: "
+            f"{resultado['procesos']['creados']} creados, "
+            f"{resultado['procesos']['actualizados']} actualizados, "
+            f"{resultado['procesos']['omitidos']} omitidos."
+        )
+        click.echo(
+            "Documentos: "
+            f"{resultado['documentos']['creados']} creados, "
+            f"{resultado['documentos']['actualizados']} actualizados, "
+            f"{resultado['documentos']['omitidos']} omitidos."
+        )
+
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True, help="Usuario administrador")
     @click.option("--password", prompt=True, hide_input=True, confirmation_prompt=True)
