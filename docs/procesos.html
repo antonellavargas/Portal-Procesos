@@ -1,1 +1,96 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Procesos | REFAX</title><link rel="stylesheet" href="assets/css/estilos.css"><link rel="icon" type="image/png" href="assets/img/favicon-refax.png"><meta name="theme-color" content="#f58220"></head><body><main class="page"><div class="page-head"><div><h1>Procesos</h1><div class="muted">Catálogo y procesos críticos</div></div><button class="btn btn-primary admin-only" onclick="openForm()">+ Nuevo proceso</button></div><div id="msg" hidden></div><div class="panel"><div class="filters"><input id="q" class="input" placeholder="Buscar..."><select id="areaFilter"><option value="">Todas las áreas</option></select><select id="critico"><option value="">Todos</option><option value="true">Críticos</option><option value="false">No críticos</option></select><button class="btn btn-secondary" onclick="load()">Filtrar</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Código</th><th>Proceso</th><th>Área</th><th>Tipo</th><th>Responsable</th><th>Crítico</th><th>Docs.</th><th class="admin-only-column">Acciones</th></tr></thead><tbody id="rows"></tbody></table></div></div></main><div id="modal" class="modal" hidden><div class="modal-card"><h2 id="formTitle">Nuevo proceso</h2><form id="form" class="form-grid"><input id="id" type="hidden"><label>Código<input id="codigo" class="input" required></label><label>Área<select id="area_id" required></select></label><label class="full">Nombre<input id="nombre" class="input" required></label><label>Tipo<input id="tipo" class="input"></label><label>Responsable<input id="responsable" class="input"></label><label>Persona responsable<input id="persona_responsable" class="input"></label><label>Fecha actualización<input id="fecha_actualizacion" type="date" class="input"></label><label class="full">Objetivo<textarea id="objetivo" rows="3"></textarea></label><label class="full">Áreas relacionadas<input id="areas_relacionadas" class="input"></label><label class="full"><input id="es_critico" type="checkbox" style="width:auto"> Proceso crítico</label><div class="full toolbar"><button class="btn btn-primary">Guardar</button><button type="button" class="btn btn-secondary" onclick="closeForm()">Cancelar</button></div></form></div></div><script src="assets/js/config.js"></script><script src="assets/js/api.js"></script><script src="assets/js/auth.js"></script><script src="assets/js/layout.js"></script><script src="assets/js/procesos.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Procesos | REFAX</title>
+  <link rel="stylesheet" href="assets/css/estilos.css">
+  <link rel="icon" type="image/png" href="assets/img/favicon-refax.png">
+  <meta name="theme-color" content="#f58220">
+</head>
+<body>
+  <main class="page">
+    <section class="page-head">
+      <div>
+        <div class="eyebrow">⚙️ Mapa operativo</div>
+        <h1>Procesos</h1>
+        <div class="muted">Consulta el catálogo de procesos, identifica procesos críticos y filtra la información por área, tipo o criterio de criticidad.</div>
+      </div>
+      <div class="page-head-actions">
+        <button class="btn btn-primary admin-only" onclick="openForm()">+ Nuevo proceso</button>
+      </div>
+    </section>
+
+    <div id="msg" hidden></div>
+
+    <section class="page-stats">
+      <div class="stat-card"><div class="stat-label">Procesos visibles</div><strong id="procCount">-</strong><div class="stat-sub">Resultado del filtro actual</div></div>
+      <div class="stat-card"><div class="stat-label">Procesos críticos</div><strong id="procCriticos">-</strong><div class="stat-sub">Procesos marcados como críticos</div></div>
+      <div class="stat-card"><div class="stat-label">Áreas involucradas</div><strong id="procAreas">-</strong><div class="stat-sub">Áreas presentes en los resultados</div></div>
+      <div class="stat-card"><div class="stat-label">Documentos asociados</div><strong id="procDocs">-</strong><div class="stat-sub">Documentación vinculada a los procesos visibles</div></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h3>Listado de procesos</h3>
+          <div class="panel-desc">Utiliza los filtros para ubicar procesos por nombre, área, tipo o nivel de criticidad.</div>
+        </div>
+      </div>
+      <div class="filters">
+        <input id="q" class="input" placeholder="Buscar por código, proceso, responsable o área...">
+        <select id="areaFilter"><option value="">Todas las áreas</option></select>
+        <select id="tipoFilter"><option value="">Todos los tipos</option></select>
+        <select id="critico"><option value="">Todos</option><option value="true">Críticos</option><option value="false">No críticos</option></select>
+        <button class="btn btn-secondary" onclick="load()">Filtrar</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Proceso</th>
+              <th>Área</th>
+              <th>Tipo</th>
+              <th>Responsable</th>
+              <th>Crítico</th>
+              <th>Docs.</th>
+              <th class="admin-only-column">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card">
+      <h2 id="formTitle">Nuevo proceso</h2>
+      <form id="form" class="form-grid">
+        <input id="id" type="hidden">
+        <label>Código<input id="codigo" class="input" required></label>
+        <label>Área<select id="area_id" required></select></label>
+        <label class="full">Nombre<input id="nombre" class="input" required></label>
+        <label>Tipo<input id="tipo" class="input"></label>
+        <label>Responsable<input id="responsable" class="input"></label>
+        <label>Persona responsable<input id="persona_responsable" class="input"></label>
+        <label>Fecha actualización<input id="fecha_actualizacion" type="date" class="input"></label>
+        <label class="full">Objetivo<textarea id="objetivo" rows="3"></textarea></label>
+        <label class="full">Áreas relacionadas<input id="areas_relacionadas" class="input"></label>
+        <label class="full"><input id="es_critico" type="checkbox" style="width:auto"> Proceso crítico</label>
+        <div class="full toolbar">
+          <button class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" onclick="closeForm()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/procesos.js"></script>
+</body>
+</html>

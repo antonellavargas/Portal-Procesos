@@ -30,8 +30,8 @@ function openForm(documento = null) {
 
 async function meta() {
   const data = await apiGet("/api/documentos/meta");
-  procesos = data.procesos;
-  tipos = data.tipos;
+  procesos = data.procesos || [];
+  tipos = data.tipos || [];
   fillMeta();
 }
 
@@ -62,6 +62,13 @@ function links(documento) {
   ).join("")}</div>`;
 }
 
+function updateStats() {
+  docCount.textContent = cache.length;
+  docMainLinks.textContent = cache.filter((x) => safeUrl(x.enlace_doc)).length;
+  docTypes.textContent = new Set(cache.map((x) => x.tipo).filter(Boolean)).size;
+  docProcesos.textContent = new Set(cache.map((x) => x.proceso?.id).filter(Boolean)).size;
+}
+
 async function load() {
   setLoading("rows", 7, "Cargando documentos...");
   try {
@@ -71,23 +78,34 @@ async function load() {
     if (tipoFilter.value) params.set("tipo", tipoFilter.value);
     const data = await apiGet(`/api/documentos?${params}`);
     cache = data.documentos;
+    updateStats();
     rows.innerHTML = cache.length
       ? cache.map((x) => `
         <tr>
-          <td><b>${esc(x.nombre)}</b><div class="source-note">Enlace importado desde la carga inicial</div></td>
-          <td>${esc(x.tipo)}</td>
-          <td>${esc(x.proceso?.codigo || "")} · ${esc(x.proceso?.nombre || "")}</td>
+          <td>
+            <div class="cell-title">
+              <strong>${esc(x.nombre)}</strong>
+              <span class="cell-sub">Enlace importado desde la carga inicial</span>
+            </div>
+          </td>
+          <td>${x.tipo ? `<span class="tag tag-doc">${esc(x.tipo)}</span>` : '<span class="muted">-</span>'}</td>
+          <td>
+            <div class="cell-title">
+              <strong>${esc(x.proceso?.codigo || "")}</strong>
+              <span class="cell-sub">${esc(x.proceso?.nombre || "")}</span>
+            </div>
+          </td>
           <td>${esc(x.version || "-")}</td>
           <td>${esc(x.fecha_actualizacion || "-")}</td>
           <td>${links(x)}</td>
           ${currentUser.rol === "administrador"
-            ? `<td class="admin-only-column"><button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(y=>y.id===${x.id}))">Editar</button>
-               <button class="btn btn-danger btn-sm" onclick="removeD(${x.id})">Eliminar</button></td>`
+            ? `<td class="admin-only-column"><div class="action-row"><button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(y=>y.id===${x.id}))">Editar</button>
+               <button class="btn btn-danger btn-sm" onclick="removeD(${x.id})">Eliminar</button></div></td>`
             : ''}
         </tr>`).join("")
-      : `<tr><td colspan="${currentUser?.rol === 'administrador' ? 7 : 6}" class="empty">No hay documentos</td></tr>`;
+      : `<tr><td colspan="${currentUser?.rol === 'administrador' ? 7 : 6}" class="empty">No hay documentos para mostrar.</td></tr>`;
   } catch (error) {
-    rows.innerHTML = `<tr><td colspan="${currentUser?.rol === 'administrador' ? 7 : 6}" class="empty">No se pudo cargar la información</td></tr>`;
+    rows.innerHTML = `<tr><td colspan="${currentUser?.rol === 'administrador' ? 7 : 6}" class="empty">No se pudo cargar la información.</td></tr>`;
     showMsg(error.message, "error");
   }
 }

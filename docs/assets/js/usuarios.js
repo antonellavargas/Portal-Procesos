@@ -53,16 +53,29 @@ async function copyCredential() {
   }
 }
 
+function updateStats() {
+  usersTotal.textContent = usersCache.length;
+  usersAdmins.textContent = usersCache.filter((x) => x.rol === "administrador").length;
+  usersLectura.textContent = usersCache.filter((x) => x.rol !== "administrador").length;
+  usersInactive.textContent = usersCache.filter((x) => !x.activo).length;
+}
+
 async function loadUsers() {
   setLoading("userRows", 6, "Cargando usuarios...");
   try {
     const data = await apiGet(`/api/usuarios?q=${encodeURIComponent(userSearch.value)}`);
     usersCache = data.usuarios;
+    updateStats();
     userRows.innerHTML = usersCache.length
       ? usersCache.map((user) => `
         <tr>
-          <td><b>${esc(user.nombre)}</b></td>
-          <td>${esc(user.username)}</td>
+          <td>
+            <div class="cell-title">
+              <strong>${esc(user.nombre)}</strong>
+              <span class="cell-sub">Perfil gestionado desde el portal</span>
+            </div>
+          </td>
+          <td><span class="badge">${esc(user.username)}</span></td>
           <td><span class="badge">${user.rol === "administrador" ? "Administrador" : "Usuario"}</span></td>
           <td>${user.activo ? '<span class="status-active">Activo</span>' : '<span class="status-inactive">Inactivo</span>'}</td>
           <td><span class="password-protected">•••••••• <small>protegida</small></span></td>
@@ -72,9 +85,9 @@ async function loadUsers() {
             <button class="btn ${user.activo ? "btn-danger" : "btn-primary"} btn-sm" onclick="toggleUser(${user.id}, ${!user.activo})">${user.activo ? "Desactivar" : "Activar"}</button>
           </td>
         </tr>`).join("")
-      : '<tr><td colspan="6" class="empty">No hay usuarios</td></tr>';
+      : '<tr><td colspan="6" class="empty">No hay usuarios para mostrar.</td></tr>';
   } catch (error) {
-    userRows.innerHTML = '<tr><td colspan="6" class="empty">No se pudo cargar la información</td></tr>';
+    userRows.innerHTML = '<tr><td colspan="6" class="empty">No se pudo cargar la información.</td></tr>';
     showMsg(error.message, "error");
   }
 }

@@ -13,15 +13,27 @@
     const max = Math.max(1, ...data.procesos_por_area.map((x) => x.cantidad));
     areasBars.innerHTML = data.procesos_por_area.length
       ? data.procesos_por_area.map((x) => `<div class="bar-row"><span>${esc(x.area)}</span><div class="bar-track"><div class="bar-fill" style="width:${x.cantidad / max * 100}%"></div></div><b>${x.cantidad}</b></div>`).join("")
-      : '<div class="empty">Sin datos</div>';
+      : '<div class="empty">Sin datos disponibles.</div>';
 
     criticos.innerHTML = data.criticos_recientes.length
-      ? data.criticos_recientes.map((x) => `<p><span class="badge-red">Crítico</span> <b>${esc(x.codigo)}</b> · ${esc(x.nombre)}<br><small class="muted">${esc(x.area)}</small></p>`).join("")
-      : '<div class="empty">No hay procesos críticos</div>';
+      ? data.criticos_recientes.map((x) => `
+        <div class="quick-item">
+          <span class="badge-red">Crítico</span>
+          <strong>${esc(x.codigo)} · ${esc(x.nombre)}</strong>
+          <small>${esc(x.area)}${x.tipo ? ` · ${esc(x.tipo)}` : ""}</small>
+        </div>`).join("")
+      : '<div class="empty">No hay procesos críticos registrados.</div>';
 
     recientes.innerHTML = data.procesos_recientes.length
-      ? data.procesos_recientes.map((x) => `<tr><td>${esc(x.codigo)}</td><td>${esc(x.nombre)}</td><td>${esc(x.area)}</td><td>${esc(x.tipo || "-")}</td><td>${x.es_critico ? '<span class="badge-red">Sí</span>' : "No"}</td></tr>`).join("")
-      : '<tr><td colspan="5" class="empty">Sin datos</td></tr>';
+      ? data.procesos_recientes.map((x) => `
+        <tr>
+          <td><span class="badge">${esc(x.codigo)}</span></td>
+          <td><div class="cell-title"><strong>${esc(x.nombre)}</strong><span class="cell-sub">${esc(x.area)}</span></div></td>
+          <td>${esc(x.area)}</td>
+          <td>${x.tipo ? `<span class="tag tag-dark">${esc(x.tipo)}</span>` : '<span class="muted">-</span>'}</td>
+          <td>${x.es_critico ? '<span class="badge-red">Sí</span>' : '<span class="badge">No</span>'}</td>
+        </tr>`).join("")
+      : '<tr><td colspan="5" class="empty">Sin datos.</td></tr>';
   } catch (error) {
     showMsg(error.message, "error");
   }

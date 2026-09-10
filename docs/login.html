@@ -6,35 +6,49 @@
   <title>Login | Portal de Procesos</title>
   <link rel="icon" type="image/png" href="assets/img/favicon-refax.png">
   <link rel="stylesheet" href="assets/css/estilos.css">
-  <style>
-    body { min-height:100vh; display:grid; place-items:center; background:#f4f6f8; }
-    .login-box { width:min(420px,92vw); background:#fff; padding:32px; border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,.12); }
-    .login-box img { display:block; max-width:150px; margin:0 auto 18px; }
-    .login-box h1 { margin:0 0 6px; font-size:1.45rem; text-align:center; }
-    .login-box p { text-align:center; color:#667085; margin-bottom:24px; }
-    .login-box label { display:block; margin:14px 0 6px; font-weight:600; }
-    .login-box input { width:100%; box-sizing:border-box; padding:12px 14px; border:1px solid #d0d5dd; border-radius:10px; }
-    .login-box button { width:100%; margin-top:20px; padding:12px; border:0; border-radius:10px; cursor:pointer; background:#232323; color:#fff; font-weight:700; }
-    #msg { min-height:24px; margin-top:12px; text-align:center; color:#b42318; }
-  </style>
-<meta name="theme-color" content="#f58220"></head>
+  <meta name="theme-color" content="#f58220">
+</head>
 <body>
-  <main class="login-box">
-    <img src="assets/img/logo-refax.png" alt="REFAX">
-    <h1>Portal de Gestión de Procesos</h1>
-    <p>Ingresa con tu usuario autorizado.</p>
+  <div class="login-layout">
+    <section class="login-side">
+      <div>
+        <div class="login-brand"><img src="assets/img/logo-refax.png" alt="REFAX"></div>
+        <div class="login-copy">
+          <h1>Portal de Gestión de Procesos</h1>
+          <p>Un espacio centralizado para consultar áreas, procesos, documentos y reportes de forma ordenada, rápida y segura.</p>
+        </div>
+        <div class="login-points">
+          <div>📂 Información centralizada del portal</div>
+          <div>⚡ Acceso rápido a procesos y documentos</div>
+          <div>🔐 Administración segura de usuarios</div>
+        </div>
+      </div>
+      <div class="muted">REFAX Perú · Plataforma interna de gestión</div>
+    </section>
 
-    <form id="loginForm">
-      <label for="username">Usuario</label>
-      <input id="username" name="username" autocomplete="username" required>
+    <section class="login-card-wrap">
+      <main class="login-card">
+        <div class="eyebrow">Bienvenida</div>
+        <h2>Iniciar sesión</h2>
+        <p>Ingresa con tu usuario autorizado para acceder al portal.</p>
 
-      <label for="password">Contraseña</label>
-      <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <form id="loginForm">
+          <label for="username">Usuario
+            <input id="username" name="username" class="input" autocomplete="username" required>
+          </label>
 
-      <button id="submitBtn" type="submit">Ingresar</button>
-      <div id="msg"></div>
-    </form>
-  </main>
+          <label for="password">Contraseña
+            <input id="password" name="password" class="input" type="password" autocomplete="current-password" required>
+          </label>
+
+          <button id="submitBtn" class="btn btn-primary" type="submit">Ingresar</button>
+          <div id="msg"></div>
+        </form>
+
+        <div class="login-helper">Si tienes problemas de acceso, solicita apoyo al administrador del portal.</div>
+      </main>
+    </section>
+  </div>
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/api.js"></script>

@@ -14,27 +14,43 @@ function openForm(area = null) {
   modal.hidden = false;
 }
 
+function updateStats() {
+  const responsables = cache.filter((x) => x.responsable_area).length;
+  const personal = cache.filter((x) => x.nombre_personal).length;
+  const procesos = cache.reduce((acc, x) => acc + Number(x.total_procesos || 0), 0);
+  areasCount.textContent = cache.length;
+  areasResp.textContent = responsables;
+  areasPersonal.textContent = personal;
+  areasProc.textContent = procesos;
+}
+
 async function load() {
   setLoading("rows", 6, "Cargando áreas...");
   try {
     const data = await apiGet(`/api/areas?q=${encodeURIComponent(q.value)}`);
     cache = data.areas;
+    updateStats();
     rows.innerHTML = cache.length
       ? cache.map((area) => `
         <tr>
-          <td><b>${esc(area.codigo)}</b></td>
-          <td>${esc(area.nombre)}</td>
+          <td><span class="badge">${esc(area.codigo)}</span></td>
+          <td>
+            <div class="cell-title">
+              <strong>${esc(area.nombre)}</strong>
+              <span class="cell-sub">${esc(area.descripcion || "Sin descripción registrada")}</span>
+            </div>
+          </td>
           <td>${esc(area.responsable_area || "-")}</td>
           <td>${esc(area.nombre_personal || "-")}</td>
-          <td>${area.total_procesos}</td>
+          <td><span class="badge">${Number(area.total_procesos || 0)} procesos</span></td>
           ${currentUser.rol === "administrador"
-            ? `<td class="admin-only-column"><button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(x=>x.id===${area.id}))">Editar</button>
-               <button class="btn btn-danger btn-sm" onclick="removeArea(${area.id})">Eliminar</button></td>`
-            : ''}
+            ? `<td class="admin-only-column"><div class="action-row"><button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(x=>x.id===${area.id}))">Editar</button>
+               <button class="btn btn-danger btn-sm" onclick="removeArea(${area.id})">Eliminar</button></div></td>`
+            : ""}
         </tr>`).join("")
-      : `<tr><td colspan="${currentUser?.rol === 'administrador' ? 6 : 5}" class="empty">No hay áreas</td></tr>`;
+      : `<tr><td colspan="${currentUser?.rol === 'administrador' ? 6 : 5}" class="empty">No hay áreas para mostrar.</td></tr>`;
   } catch (error) {
-    rows.innerHTML = `<tr><td colspan="${currentUser?.rol === 'administrador' ? 6 : 5}" class="empty">No se pudo cargar la información</td></tr>`;
+    rows.innerHTML = `<tr><td colspan="${currentUser?.rol === 'administrador' ? 6 : 5}" class="empty">No se pudo cargar la información.</td></tr>`;
     showMsg(error.message, "error");
   }
 }
