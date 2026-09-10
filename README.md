@@ -63,3 +63,11 @@ Después de actualizar el backend, ejecutar una sola vez desde `backend/` (con e
 ```powershell
 flask --app app optimize-db
 ```
+
+
+## Ajustes de perfiles e identidad visual (2026-09)
+- Perfiles disponibles: **Administrador** y **Usuario**.
+- Usuario: acceso de solo lectura; las rutas de escritura siguen protegidas en backend con rol administrador.
+- Administrador: CRUD y gestión de usuarios/contraseñas.
+- Color principal del portal actualizado de rojo a **naranja**.
+- Favicon REFAX aplicado a todas las páginas.

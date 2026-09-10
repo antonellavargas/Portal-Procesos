@@ -1,7 +1,8 @@
 :root {
-    --refax-rojo: #d71920;
-    --refax-rojo-oscuro: #a90f15;
-    --refax-rojo-claro: #fce8e9;
+    /* Identidad visual: naranja como color principal del portal */
+    --refax-naranja: #f58220;
+    --refax-naranja-oscuro: #c85f0a;
+    --refax-naranja-claro: #fff0e3;
 
     --refax-negro: #171717;
     --refax-gris-oscuro: #2b2b2b;
@@ -79,7 +80,7 @@ body {
 }
 
 .logo-texto-alternativo {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     font-size: 18px;
     font-weight: 900;
     letter-spacing: 1px;
@@ -125,13 +126,13 @@ body {
 }
 
 .sidebar-menu a:hover {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     transform: translateX(3px);
 }
 
 .sidebar-menu a.activo {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
 }
 
@@ -186,7 +187,7 @@ body {
 }
 
 .indicador-critico {
-    border-left-color: var(--refax-rojo);
+    border-left-color: var(--refax-naranja);
 }
 
 .indicador-pendiente {
@@ -243,16 +244,16 @@ body {
 }
 
 .btn-refax {
-    background: var(--refax-rojo);
-    border-color: var(--refax-rojo);
+    background: var(--refax-naranja);
+    border-color: var(--refax-naranja);
     color: var(--blanco);
     font-weight: 600;
 }
 
 .btn-refax:hover,
 .btn-refax:focus {
-    background: var(--refax-rojo-oscuro);
-    border-color: var(--refax-rojo-oscuro);
+    background: var(--refax-naranja-oscuro);
+    border-color: var(--refax-naranja-oscuro);
     color: var(--blanco);
 }
 
@@ -281,12 +282,12 @@ textarea.form-control {
 
 .form-control:focus,
 .form-select:focus {
-    border-color: var(--refax-rojo);
-    box-shadow: 0 0 0 0.2rem rgba(200, 16, 46, 0.12);
+    border-color: var(--refax-naranja);
+    box-shadow: 0 0 0 0.2rem rgba(245, 130, 32, 0.16);
 }
 
 .campo-obligatorio {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
 }
 
 .acciones-formulario {
@@ -322,8 +323,8 @@ textarea.form-control {
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    background: rgba(200, 16, 46, 0.1);
-    color: var(--refax-rojo);
+    background: rgba(245, 130, 32, 0.12);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -405,14 +406,14 @@ textarea.form-control {
 }
 
 .enlace-detalle {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     text-decoration: none;
     font-size: 13px;
     font-weight: 700;
 }
 
 .enlace-detalle:hover {
-    color: var(--refax-rojo-oscuro);
+    color: var(--refax-naranja-oscuro);
 }
 
 .estado-vacio {
@@ -428,8 +429,8 @@ textarea.form-control {
     height: 65px;
     margin: 0 auto 18px;
     border-radius: 50%;
-    background: rgba(200, 16, 46, 0.08);
-    color: var(--refax-rojo);
+    background: rgba(245, 130, 32, 0.10);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -450,7 +451,7 @@ textarea.form-control {
 }
 
 .ruta-pagina a {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     text-decoration: none;
 }
 
@@ -484,18 +485,18 @@ textarea.form-control {
 }
 
 .panel-peligro {
-    background: #fff7f7;
-    border: 1px solid #fecaca;
+    background: #fff8f1;
+    border: 1px solid #fed7aa;
     border-radius: 12px;
     padding: 22px;
 }
 
 .panel-peligro h5 {
-    color: #991b1b;
+    color: #9a3412;
 }
 
 .panel-peligro p {
-    color: #7f1d1d;
+    color: #7c2d12;
     font-size: 14px;
 }
 
@@ -566,8 +567,8 @@ textarea.form-control {
     height: 39px;
     min-width: 39px;
     border-radius: 10px;
-    background: var(--refax-rojo-claro);
-    color: var(--refax-rojo);
+    background: var(--refax-naranja-claro);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -586,8 +587,8 @@ textarea.form-control {
 }
 
 .form-check-input:checked {
-    background-color: var(--refax-rojo);
-    border-color: var(--refax-rojo);
+    background-color: var(--refax-naranja);
+    border-color: var(--refax-naranja);
 }
 
 .panel-filtros {
@@ -639,8 +640,8 @@ textarea.form-control {
 }
 
 .criticidad-critico {
-    background: #fee2e2;
-    color: #991b1b;
+    background: #ffedd5;
+    color: #9a3412;
 }
 
 .acciones-finales {
@@ -661,11 +662,11 @@ textarea.form-control {
     gap: 16px;
     background: linear-gradient(
         135deg,
-        #fff5f5,
+        #fff7ed,
         #ffffff
     );
-    border: 1px solid #fecaca;
-    border-left: 5px solid var(--refax-rojo);
+    border: 1px solid #fed7aa;
+    border-left: 5px solid var(--refax-naranja);
     border-radius: 13px;
     padding: 20px;
 }
@@ -675,7 +676,7 @@ textarea.form-control {
     height: 42px;
     min-width: 42px;
     border-radius: 50%;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     display: flex;
     align-items: center;
@@ -686,13 +687,13 @@ textarea.form-control {
 
 .alerta-ejecutiva strong {
     display: block;
-    color: #7f1d1d;
+    color: #7c2d12;
     margin-bottom: 5px;
 }
 
 .alerta-ejecutiva p {
     margin: 0;
-    color: #7f1d1d;
+    color: #7c2d12;
     font-size: 14px;
     line-height: 1.6;
 }
@@ -701,7 +702,7 @@ textarea.form-control {
     height: 100%;
     background: var(--blanco);
     border: 1px solid var(--gris-borde);
-    border-top: 5px solid var(--refax-rojo);
+    border-top: 5px solid var(--refax-naranja);
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
@@ -722,12 +723,12 @@ textarea.form-control {
     gap: 14px;
     padding: 19px 21px;
     border-bottom: 1px solid var(--gris-borde);
-    background: #fffafa;
+    background: #fffaf5;
 }
 
 .codigo-proceso {
     display: block;
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.5px;
@@ -741,7 +742,7 @@ textarea.form-control {
 }
 
 .insignia-critica {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     border-radius: 20px;
     padding: 6px 11px;
@@ -806,7 +807,7 @@ textarea.form-control {
     display: flex;
     align-items: center;
     gap: 7px;
-    color: #991b1b;
+    color: #9a3412;
     font-size: 12px;
     font-weight: 700;
 }
@@ -815,19 +816,19 @@ textarea.form-control {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.12);
 }
 
 .enlace-proceso {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     text-decoration: none;
     font-size: 12px;
     font-weight: 800;
 }
 
 .enlace-proceso:hover {
-    color: var(--refax-rojo-oscuro);
+    color: var(--refax-naranja-oscuro);
 }
 
 /* =========================================================
@@ -851,7 +852,7 @@ textarea.form-control {
 .etiqueta-proceso-critico {
     display: inline-flex;
     align-items: center;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     border-radius: 20px;
     padding: 7px 13px;
@@ -895,8 +896,8 @@ textarea.form-control {
     height: 42px;
     min-width: 42px;
     border-radius: 10px;
-    background: var(--refax-rojo-claro);
-    color: var(--refax-rojo);
+    background: var(--refax-naranja-claro);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -904,7 +905,7 @@ textarea.form-control {
 }
 
 .numero-seccion-critico {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
 }
 
@@ -974,9 +975,9 @@ textarea.form-control {
     align-items: flex-start;
     padding: 17px;
     margin-bottom: 20px;
-    border: 1px solid #fecaca;
+    border: 1px solid #fed7aa;
     border-radius: 11px;
-    background: #fff5f5;
+    background: #fff7ed;
 }
 
 .mensaje-proceso-icono {
@@ -984,7 +985,7 @@ textarea.form-control {
     height: 36px;
     min-width: 36px;
     border-radius: 50%;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     display: flex;
     align-items: center;
@@ -994,12 +995,12 @@ textarea.form-control {
 
 .mensaje-proceso-critico strong {
     display: block;
-    color: #991b1b;
+    color: #9a3412;
 }
 
 .mensaje-proceso-critico p {
     margin: 3px 0 0;
-    color: #991b1b;
+    color: #9a3412;
     font-size: 13px;
 }
 
@@ -1035,8 +1036,8 @@ textarea.form-control {
 }
 
 .tarjeta-riesgo {
-    background: #fff5f5;
-    border: 1px solid #fecaca;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
 }
 
 .tarjeta-control {
@@ -1069,7 +1070,7 @@ textarea.form-control {
 }
 
 .icono-riesgo {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
 }
 
@@ -1172,7 +1173,7 @@ textarea.form-control {
     width: 33px;
     height: 33px;
     border-radius: 50%;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     display: flex;
     align-items: center;
@@ -1274,7 +1275,7 @@ textarea.form-control {
 }
 
 .tabla-procesos-dashboard tbody tr:hover {
-    background: #fffafa;
+    background: #fffaf5;
 }
 
 .estado-documental {
@@ -1303,14 +1304,14 @@ textarea.form-control {
 }
 
 .enlace-procesos-criticos {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     text-decoration: none;
     font-size: 12px;
     font-weight: 800;
 }
 
 .enlace-procesos-criticos:hover {
-    color: var(--refax-rojo-oscuro);
+    color: var(--refax-naranja-oscuro);
 }
 
 .lista-criticos-dashboard {
@@ -1324,9 +1325,9 @@ textarea.form-control {
     align-items: flex-start;
     gap: 12px;
     padding: 14px;
-    border: 1px solid #fecaca;
+    border: 1px solid #fed7aa;
     border-radius: 11px;
-    background: #fffafa;
+    background: #fffaf5;
     text-decoration: none;
     transition:
         transform 0.2s ease,
@@ -1336,7 +1337,7 @@ textarea.form-control {
 
 .item-critico-dashboard:hover {
     transform: translateY(-2px);
-    border-color: var(--refax-rojo);
+    border-color: var(--refax-naranja);
     box-shadow: 0 5px 14px rgba(215, 25, 32, 0.1);
 }
 
@@ -1345,7 +1346,7 @@ textarea.form-control {
     height: 34px;
     min-width: 34px;
     border-radius: 50%;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     display: flex;
     align-items: center;
@@ -1367,7 +1368,7 @@ textarea.form-control {
 }
 
 .contenido-critico-dashboard span {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
     font-size: 11px;
     font-weight: 700;
     margin-top: 3px;
@@ -1473,8 +1474,8 @@ textarea.form-control {
     height: 37px;
     min-width: 37px;
     border-radius: 9px;
-    background: var(--refax-rojo-claro);
-    color: var(--refax-rojo);
+    background: var(--refax-naranja-claro);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1489,7 +1490,7 @@ textarea.form-control {
 }
 
 .enlace-proceso-documento:hover {
-    color: var(--refax-rojo);
+    color: var(--refax-naranja);
 }
 
 .estado-documento {
@@ -1517,8 +1518,8 @@ textarea.form-control {
 }
 
 .estado-documento-obsoleto {
-    background: #fee2e2;
-    color: #991b1b;
+    background: #ffedd5;
+    color: #9a3412;
 }
 
 .estado-documento-pendiente {
@@ -1545,7 +1546,7 @@ textarea.form-control {
 }
 
 .dropdown-item:active {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
 }
 
 @media (max-width: 768px) {
@@ -1588,8 +1589,8 @@ textarea.form-control {
     height: 52px;
     margin: 0 auto 14px;
     border-radius: 50%;
-    background: var(--refax-rojo-claro);
-    color: var(--refax-rojo);
+    background: var(--refax-naranja-claro);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1666,12 +1667,12 @@ textarea.form-control {
 }
 
 .estado-documental-riesgo {
-    background: #fff5f5;
-    border-color: #fecaca;
+    background: #fff7ed;
+    border-color: #fed7aa;
 }
 
 .estado-documental-riesgo > span {
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
 }
 
@@ -1731,8 +1732,8 @@ textarea.form-control {
     height: 42px;
     min-width: 42px;
     border-radius: 10px;
-    background: var(--refax-rojo-claro);
-    color: var(--refax-rojo);
+    background: var(--refax-naranja-claro);
+    color: var(--refax-naranja);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1811,7 +1812,7 @@ textarea.form-control {
     width: 38px;
     height: 38px;
     border-radius: 9px;
-    background: var(--refax-rojo);
+    background: var(--refax-naranja);
     color: var(--blanco);
     display: flex;
     align-items: center;
@@ -1879,7 +1880,7 @@ textarea.form-control {
             135deg,
             #181818 0%,
             #292929 55%,
-            #d71920 100%
+            #f58220 100%
         );
 }
 
@@ -2006,8 +2007,8 @@ textarea.form-control {
 
 .titulo-subseccion-formulario {
     padding: 15px 18px;
-    background: var(--refax-rojo-claro);
-    border-left: 4px solid var(--refax-rojo);
+    background: var(--refax-naranja-claro);
+    border-left: 4px solid var(--refax-naranja);
     border-radius: 10px;
 }
 
@@ -2175,7 +2176,7 @@ textarea.form-control {
     .acciones-administrativas-documento .btn {
         width: 100%;
     }
-}.app-sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#171717;color:#fff;padding:20px 14px;display:flex;flex-direction:column;z-index:50}.brand{display:flex;gap:10px;align-items:center;padding:4px 6px 22px;border-bottom:1px solid #444}.brand img{background:#fff;width:72px;height:48px;object-fit:contain;border-radius:8px;padding:5px}.brand div{display:flex;flex-direction:column}.brand small,.side-user small{color:#bbb;margin-top:3px}.app-sidebar nav{display:grid;gap:7px;margin-top:22px}.app-sidebar nav a{color:#eee;text-decoration:none;padding:11px 13px;border-radius:8px}.app-sidebar nav a:hover,.app-sidebar nav a.active{background:#d71920}.side-user{margin-top:auto;padding:14px 8px;display:flex;flex-direction:column;gap:7px}.side-user button{border:1px solid #555;background:transparent;color:#fff;border-radius:8px;padding:8px}.with-sidebar{padding-left:245px}.page{padding:28px;max-width:1500px;margin:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}.page-head h1{margin:0 0 5px}.muted{color:#6b7280}.toolbar,.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.btn{border:0;border-radius:8px;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-block}.btn-primary{background:#d71920;color:#fff}.btn-secondary{background:#e5e7eb;color:#222}.btn-danger{background:#991b1b;color:#fff}.btn-sm{padding:6px 9px;font-size:12px}.panel,.metric{background:#fff;border:1px solid #e2e5e9;border-radius:12px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.04)}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.metric strong{display:block;font-size:30px;margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:11px 10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}.table th{font-size:12px;text-transform:uppercase;color:#6b7280}.input,select,textarea{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;background:#fff}.filters .input,.filters select{width:auto;min-width:170px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}.modal[hidden]{display:none}.modal-card{background:#fff;width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:14px;padding:22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-grid .full{grid-column:1/-1}.form-grid label{font-size:13px;font-weight:700}.form-grid label>*{margin-top:6px}.message{padding:10px 12px;border-radius:8px;margin-bottom:14px}.message.ok{background:#dcfce7}.message.error{background:#fee2e2}.badge-red{background:#fee2e2;color:#991b1b;padding:4px 8px;border-radius:99px;font-size:12px}.badge{background:#f3f4f6;padding:4px 8px;border-radius:99px;font-size:12px}.bars{display:grid;gap:10px}.bar-row{display:grid;grid-template-columns:180px 1fr 45px;gap:10px;align-items:center}.bar-track{height:12px;background:#eee;border-radius:99px;overflow:hidden}.bar-fill{height:100%;background:#d71920;border-radius:99px}.empty{text-align:center;padding:28px;color:#777}.links a{display:block;margin:3px 0}@media(max-width:900px){.app-sidebar{width:200px}.with-sidebar{padding-left:200px}.metrics{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}@media(max-width:650px){.app-sidebar{position:static;width:auto}.with-sidebar{padding-left:0}.metrics{grid-template-columns:1fr}.page{padding:16px}.page-head{flex-direction:column}}
+}.app-sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#171717;color:#fff;padding:20px 14px;display:flex;flex-direction:column;z-index:50}.brand{display:flex;gap:10px;align-items:center;padding:4px 6px 22px;border-bottom:1px solid #444}.brand img{background:#fff;width:72px;height:48px;object-fit:contain;border-radius:8px;padding:5px}.brand div{display:flex;flex-direction:column}.brand small,.side-user small{color:#bbb;margin-top:3px}.app-sidebar nav{display:grid;gap:7px;margin-top:22px}.app-sidebar nav a{color:#eee;text-decoration:none;padding:11px 13px;border-radius:8px}.app-sidebar nav a:hover,.app-sidebar nav a.active{background:#f58220}.side-user{margin-top:auto;padding:14px 8px;display:flex;flex-direction:column;gap:7px}.side-user button{border:1px solid #555;background:transparent;color:#fff;border-radius:8px;padding:8px}.with-sidebar{padding-left:245px}.page{padding:28px;max-width:1500px;margin:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}.page-head h1{margin:0 0 5px}.muted{color:#6b7280}.toolbar,.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.btn{border:0;border-radius:8px;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-block}.btn-primary{background:#f58220;color:#fff}.btn-secondary{background:#e5e7eb;color:#222}.btn-danger{background:#9a3412;color:#fff}.btn-sm{padding:6px 9px;font-size:12px}.panel,.metric{background:#fff;border:1px solid #e2e5e9;border-radius:12px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.04)}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.metric strong{display:block;font-size:30px;margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:11px 10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}.table th{font-size:12px;text-transform:uppercase;color:#6b7280}.input,select,textarea{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;background:#fff}.filters .input,.filters select{width:auto;min-width:170px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}.modal[hidden]{display:none}.modal-card{background:#fff;width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:14px;padding:22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-grid .full{grid-column:1/-1}.form-grid label{font-size:13px;font-weight:700}.form-grid label>*{margin-top:6px}.message{padding:10px 12px;border-radius:8px;margin-bottom:14px}.message.ok{background:#dcfce7}.message.error{background:#ffedd5}.badge-red{background:#ffedd5;color:#9a3412;padding:4px 8px;border-radius:99px;font-size:12px}.badge{background:#f3f4f6;padding:4px 8px;border-radius:99px;font-size:12px}.bars{display:grid;gap:10px}.bar-row{display:grid;grid-template-columns:180px 1fr 45px;gap:10px;align-items:center}.bar-track{height:12px;background:#eee;border-radius:99px;overflow:hidden}.bar-fill{height:100%;background:#f58220;border-radius:99px}.empty{text-align:center;padding:28px;color:#777}.links a{display:block;margin:3px 0}@media(max-width:900px){.app-sidebar{width:200px}.with-sidebar{padding-left:200px}.metrics{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}@media(max-width:650px){.app-sidebar{position:static;width:auto}.with-sidebar{padding-left:0}.metrics{grid-template-columns:1fr}.page{padding:16px}.page-head{flex-direction:column}}
 
 /* =========================================================
    MEJORAS 2026: SIDEBAR, RENDIMIENTO, USUARIOS Y DOCUMENTOS
@@ -2251,7 +2252,7 @@ textarea.form-control {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #d71920;
+    background: #f58220;
     display: grid;
     place-items: center;
     font-weight: 800;
@@ -2331,7 +2332,7 @@ textarea.form-control {
     margin-right: 9px;
     vertical-align: -4px;
     border: 2px solid #d0d5dd;
-    border-top-color: #d71920;
+    border-top-color: #f58220;
     border-radius: 50%;
     animation: portalSpin .7s linear infinite;
 }
@@ -2344,7 +2345,7 @@ textarea.form-control {
     padding: 14px 16px;
     margin-bottom: 16px;
     border: 1px solid #f0d1d2;
-    border-left: 4px solid #d71920;
+    border-left: 4px solid #f58220;
     border-radius: 10px;
     background: #fff8f8;
     color: #4b5563;
@@ -2455,8 +2456,8 @@ textarea.form-control {
 }
 
 .doc-link.primary {
-    background: #fee2e2;
-    color: #991b1b;
+    background: #ffedd5;
+    color: #9a3412;
 }
 
 .source-note {
@@ -2483,3 +2484,18 @@ textarea.form-control {
         justify-content: center;
     }
 }
+
+
+/* Perfil Usuario: navegación y tablas en modo solo lectura */
+.admin-only-column[hidden], .admin-only[hidden] { display: none !important; }
+.readonly-note {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #fed7aa;
+  border-left: 4px solid var(--refax-naranja);
+  border-radius: 10px;
+  background: #fff7ed;
+  color: #7c2d12;
+  font-size: 14px;
+}
+.readonly-note strong { color: #9a3412; }

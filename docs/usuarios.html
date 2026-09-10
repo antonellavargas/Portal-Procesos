@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Usuarios | Procesos REFAX</title>
-  <link rel="icon" href="assets/img/logo-refax.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon-refax.png">
   <link rel="stylesheet" href="assets/css/estilos.css">
-</head>
+<meta name="theme-color" content="#f58220"></head>
 <body>
   <main class="page">
     <div class="page-head">
@@ -26,7 +26,7 @@
 
     <div class="panel">
       <div class="filters">
-        <input id="userSearch" class="input" placeholder="Buscar por nombre, usuario o rol...">
+        <input id="userSearch" class="input" placeholder="Buscar por nombre, usuario o perfil...">
         <button class="btn btn-secondary" onclick="loadUsers()">Buscar</button>
       </div>
       <div class="table-wrap">
@@ -35,7 +35,7 @@
             <tr>
               <th>Nombre</th>
               <th>Usuario</th>
-              <th>Rol</th>
+              <th>Perfil</th>
               <th>Estado</th>
               <th>Contraseña</th>
               <th>Acciones</th>
@@ -60,7 +60,7 @@
         </label>
         <label>Rol
           <select id="user_rol">
-            <option value="usuario">Consulta</option>
+            <option value="usuario">Usuario</option>
             <option value="administrador">Administrador</option>
           </select>
         </label>

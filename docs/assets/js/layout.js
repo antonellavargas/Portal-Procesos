@@ -10,6 +10,11 @@ function esc(v) {
   }[c]));
 }
 
+
+function roleLabel(role) {
+  return role === "administrador" ? "Administrador" : "Usuario";
+}
+
 function showMsg(text, type = "ok") {
   const el = document.getElementById("msg");
   if (!el) return;
@@ -75,7 +80,7 @@ async function initLayout(active) {
       </nav>
       <div class="side-user">
         <div class="side-user-icon">${esc((user.nombre || user.username || "U").charAt(0).toUpperCase())}</div>
-        <div class="side-user-copy"><b>${esc(user.nombre)}</b><small>${esc(user.rol)}</small></div>
+        <div class="side-user-copy"><b>${esc(user.nombre)}</b><small>${esc(roleLabel(user.rol))}</small></div>
         <button class="logout-btn" onclick="logout()" title="Cerrar sesión"><span>↪</span><span class="nav-label">Cerrar sesión</span></button>
       </div>
     </aside>`
@@ -83,7 +88,14 @@ async function initLayout(active) {
 
   document.body.classList.add("with-sidebar");
   document.querySelector(`[data-key="${active}"]`)?.classList.add("active");
-  document.querySelectorAll(".admin-only").forEach((x) => (x.hidden = user.rol !== "administrador"));
+
+  if (user.rol !== "administrador") {
+    const page = document.querySelector("main.page");
+    if (page && active !== "dashboard") {
+      page.insertAdjacentHTML("afterbegin", `<div class="readonly-note"><strong>Modo solo lectura.</strong> Tu perfil de Usuario puede visualizar y consultar la información, pero no crear, editar ni eliminar registros.</div>`);
+    }
+  }
+  document.querySelectorAll(".admin-only, .admin-only-column").forEach((x) => (x.hidden = user.rol !== "administrador"));
 
   applySidebarState(localStorage.getItem(SIDEBAR_KEY) === "1");
   return user;

@@ -80,14 +80,14 @@ async function load() {
           <td>${esc(x.version || "-")}</td>
           <td>${esc(x.fecha_actualizacion || "-")}</td>
           <td>${links(x)}</td>
-          <td>${currentUser.rol === "administrador"
-            ? `<button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(y=>y.id===${x.id}))">Editar</button>
-               <button class="btn btn-danger btn-sm" onclick="removeD(${x.id})">Eliminar</button>`
-            : '<span class="muted">Consulta</span>'}</td>
+          ${currentUser.rol === "administrador"
+            ? `<td class="admin-only-column"><button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(y=>y.id===${x.id}))">Editar</button>
+               <button class="btn btn-danger btn-sm" onclick="removeD(${x.id})">Eliminar</button></td>`
+            : ''}
         </tr>`).join("")
-      : '<tr><td colspan="7" class="empty">No hay documentos</td></tr>';
+      : `<tr><td colspan="${currentUser?.rol === 'administrador' ? 7 : 6}" class="empty">No hay documentos</td></tr>`;
   } catch (error) {
-    rows.innerHTML = '<tr><td colspan="7" class="empty">No se pudo cargar la información</td></tr>';
+    rows.innerHTML = `<tr><td colspan="${currentUser?.rol === 'administrador' ? 7 : 6}" class="empty">No se pudo cargar la información</td></tr>`;
     showMsg(error.message, "error");
   }
 }

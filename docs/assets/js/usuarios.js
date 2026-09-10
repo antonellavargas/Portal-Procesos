@@ -63,7 +63,7 @@ async function loadUsers() {
         <tr>
           <td><b>${esc(user.nombre)}</b></td>
           <td>${esc(user.username)}</td>
-          <td><span class="badge">${user.rol === "administrador" ? "Administrador" : "Consulta"}</span></td>
+          <td><span class="badge">${user.rol === "administrador" ? "Administrador" : "Usuario"}</span></td>
           <td>${user.activo ? '<span class="status-active">Activo</span>' : '<span class="status-inactive">Inactivo</span>'}</td>
           <td><span class="password-protected">•••••••• <small>protegida</small></span></td>
           <td class="user-actions">

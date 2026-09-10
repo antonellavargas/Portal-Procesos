@@ -51,14 +51,14 @@ async function load() {
           <td>${esc(p.responsable || p.persona_responsable || "-")}</td>
           <td>${p.es_critico ? '<span class="badge-red">Crítico</span>' : "No"}</td>
           <td>${p.total_documentos}</td>
-          <td>${currentUser.rol === "administrador"
-            ? `<button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(x=>x.id===${p.id}))">Editar</button>
-               <button class="btn btn-danger btn-sm" onclick="removeP(${p.id})">Eliminar</button>`
-            : '<span class="muted">Consulta</span>'}</td>
+          ${currentUser.rol === "administrador"
+            ? `<td class="admin-only-column"><button class="btn btn-secondary btn-sm" onclick="openForm(cache.find(x=>x.id===${p.id}))">Editar</button>
+               <button class="btn btn-danger btn-sm" onclick="removeP(${p.id})">Eliminar</button></td>`
+            : ''}
         </tr>`).join("")
-      : '<tr><td colspan="8" class="empty">No hay procesos</td></tr>';
+      : `<tr><td colspan="${currentUser?.rol === 'administrador' ? 8 : 7}" class="empty">No hay procesos</td></tr>`;
   } catch (error) {
-    rows.innerHTML = '<tr><td colspan="8" class="empty">No se pudo cargar la información</td></tr>';
+    rows.innerHTML = `<tr><td colspan="${currentUser?.rol === 'administrador' ? 8 : 7}" class="empty">No se pudo cargar la información</td></tr>`;
     showMsg(error.message, "error");
   }
 }
