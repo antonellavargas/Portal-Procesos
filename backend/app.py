@@ -12,6 +12,7 @@ from routes.procesos import procesos_bp
 from routes.documentos import documentos_bp
 from routes.dashboard import dashboard_bp
 from routes.reportes import reportes_bp
+from routes.usuarios import usuarios_bp
 
 # Importar modelos registra las tablas en SQLAlchemy.
 import models  # noqa: F401, E402
@@ -41,6 +42,7 @@ def create_app():
     app.register_blueprint(documentos_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(reportes_bp)
+    app.register_blueprint(usuarios_bp)
 
     @app.get("/")
     def root():
@@ -96,6 +98,25 @@ def create_app():
             f"{resultado['documentos']['actualizados']} actualizados, "
             f"{resultado['documentos']['omitidos']} omitidos."
         )
+
+    @app.cli.command("optimize-db")
+    def optimize_db():
+        """Crea índices de rendimiento que todavía no existen."""
+        from sqlalchemy import Index
+
+        indexes = [
+            Index("ix_procesos_area_id_perf", models.Proceso.area_id),
+            Index("ix_procesos_tipo_perf", models.Proceso.tipo),
+            Index("ix_procesos_critico_perf", models.Proceso.es_critico),
+            Index("ix_documentos_proceso_id_perf", models.Documento.proceso_id),
+            Index("ix_documentos_tipo_perf", models.Documento.tipo),
+            Index("ix_documentos_nombre_perf", models.Documento.nombre),
+            Index("ix_usuarios_activo_perf", models.Usuario.activo),
+            Index("ix_usuarios_rol_perf", models.Usuario.rol),
+        ]
+        for index in indexes:
+            index.create(bind=db.engine, checkfirst=True)
+        click.echo("Índices de rendimiento verificados correctamente.")
 
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True, help="Usuario administrador")

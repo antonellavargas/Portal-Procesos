@@ -45,3 +45,21 @@ Frontend local: `http://127.0.0.1:5500`
 ## Azure / GitHub
 
 Consulta `DEPLOYMENT.md`.
+
+## Mejoras de rendimiento y administración (2026-09)
+
+Esta versión incorpora:
+- caché de usuario en `sessionStorage` para evitar consultar `/api/auth/me` en cada página;
+- carga paralela de metadatos y listados en Procesos y Documentos;
+- `selectinload` en listados para reducir consultas N+1 a MySQL;
+- comando `flask --app app optimize-db` para crear índices de rendimiento sin duplicarlos;
+- sidebar expandible/compacto con estado persistente;
+- módulo `/api/usuarios` y `usuarios.html`, exclusivo de administradores;
+- creación/restablecimiento de contraseñas por admin; la contraseña actual nunca se almacena en texto legible;
+- apertura directa de documentos y flujogramas mediante los enlaces importados desde Excel.
+
+Después de actualizar el backend, ejecutar una sola vez desde `backend/` (con el `.env` apuntando a Azure MySQL):
+
+```powershell
+flask --app app optimize-db
+```
