@@ -99,6 +99,32 @@ def create_app():
             f"{resultado['documentos']['omitidos']} omitidos."
         )
 
+    @app.cli.command("upgrade-estados")
+    def upgrade_estados():
+        """Agrega el campo estado a Procesos y Documentos sin borrar datos existentes."""
+        from sqlalchemy import inspect, text
+
+        inspector = inspect(db.engine)
+        cambios = []
+        for tabla in ("procesos", "documentos"):
+            columnas = {col["name"] for col in inspector.get_columns(tabla)}
+            if "estado" not in columnas:
+                db.session.execute(text(
+                    f"ALTER TABLE {tabla} ADD COLUMN estado VARCHAR(20) NOT NULL DEFAULT 'Activo'"
+                ))
+                cambios.append(tabla)
+        db.session.commit()
+
+        # Los registros existentes quedan activos por defecto.
+        db.session.execute(text("UPDATE procesos SET estado='Activo' WHERE estado IS NULL OR TRIM(estado)=''"))
+        db.session.execute(text("UPDATE documentos SET estado='Activo' WHERE estado IS NULL OR TRIM(estado)=''"))
+        db.session.commit()
+
+        click.echo(
+            "Campos de estado verificados correctamente. "
+            + ("Actualizados: " + ", ".join(cambios) if cambios else "No se requirieron cambios de estructura.")
+        )
+
     @app.cli.command("optimize-db")
     def optimize_db():
         """Crea índices de rendimiento que todavía no existen."""
@@ -108,8 +134,10 @@ def create_app():
             Index("ix_procesos_area_id_perf", models.Proceso.area_id),
             Index("ix_procesos_tipo_perf", models.Proceso.tipo),
             Index("ix_procesos_critico_perf", models.Proceso.es_critico),
+            Index("ix_procesos_estado_perf", models.Proceso.estado),
             Index("ix_documentos_proceso_id_perf", models.Documento.proceso_id),
             Index("ix_documentos_tipo_perf", models.Documento.tipo),
+            Index("ix_documentos_estado_perf", models.Documento.estado),
             Index("ix_documentos_nombre_perf", models.Documento.nombre),
             Index("ix_usuarios_activo_perf", models.Usuario.activo),
             Index("ix_usuarios_rol_perf", models.Usuario.rol),

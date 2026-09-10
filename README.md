@@ -71,3 +71,16 @@ flask --app app optimize-db
 - Administrador: CRUD y gestión de usuarios/contraseñas.
 - Color principal del portal actualizado de rojo a **naranja**.
 - Favicon REFAX aplicado a todas las páginas.
+
+## Actualización: páginas compactas por tipo documental
+
+Se agregaron páginas independientes para Procesos, Documentos, Guías, Manuales y Políticas. Todas incluyen filtros por nombre, área y estado (Activo/Inactivo). Los listados se simplificaron para mostrar solo información esencial.
+
+Antes de desplegar esta versión sobre una base existente, ejecutar una vez desde `backend`:
+
+```bash
+flask --app app upgrade-estados
+flask --app app optimize-db
+```
+
+El primer comando agrega el campo `estado` a procesos y documentos sin borrar información y deja los registros existentes como `Activo`.

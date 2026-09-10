@@ -34,6 +34,7 @@ def listar():
     area_id = request.args.get("area_id", type=int)
     tipo = (request.args.get("tipo") or "").strip()
     critico = (request.args.get("critico") or "").lower()
+    estado = (request.args.get("estado") or "").strip()
     query = Proceso.query.options(
         selectinload(Proceso.area),
         selectinload(Proceso.documentos),
@@ -57,6 +58,8 @@ def listar():
         query = query.filter(Proceso.es_critico.is_(True))
     if critico in ("0", "false", "no"):
         query = query.filter(Proceso.es_critico.is_(False))
+    if estado:
+        query = query.filter(func.lower(Proceso.estado) == estado.lower())
     return jsonify({"procesos": [full(x) for x in query.order_by(Proceso.nombre.asc()).all()]})
 
 
@@ -129,6 +132,8 @@ def aplicar(proceso, data):
     proceso.es_critico = bool(data.get("es_critico", False))
     proceso.areas_relacionadas = str(data.get("areas_relacionadas", "")).strip() or None
     proceso.fecha_actualizacion = fecha(data.get("fecha_actualizacion"))
+    estado = str(data.get("estado", proceso.estado or "Activo")).strip().title()
+    proceso.estado = estado if estado in {"Activo", "Inactivo"} else "Activo"
 
 
 @procesos_bp.post("")

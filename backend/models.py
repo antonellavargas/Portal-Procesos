@@ -77,6 +77,7 @@ class Proceso(db.Model):
     es_critico = db.Column(db.Boolean, default=False, nullable=False)
     areas_relacionadas = db.Column(db.Text, nullable=True)
     fecha_actualizacion = db.Column(db.Date, nullable=True)
+    estado = db.Column(db.String(20), nullable=False, default="Activo", index=True)
 
     documentos = db.relationship(
         "Documento",
@@ -102,6 +103,7 @@ class Proceso(db.Model):
                 if isinstance(self.fecha_actualizacion, date)
                 else None
             ),
+            "estado": self.estado or "Activo",
         }
 
 
@@ -114,6 +116,7 @@ class Documento(db.Model):
     nombre = db.Column(db.String(200), nullable=False)
     version = db.Column(db.String(30), nullable=True)
     fecha_actualizacion = db.Column(db.Date, nullable=True)
+    estado = db.Column(db.String(20), nullable=False, default="Activo", index=True)
     enlace_doc = db.Column(db.String(500), nullable=True)
     enlace_fluj = db.Column(db.String(500), nullable=True)
     enlace_fluj1 = db.Column(db.String(500), nullable=True)
@@ -132,6 +135,7 @@ class Documento(db.Model):
                 if isinstance(self.fecha_actualizacion, date)
                 else None
             ),
+            "estado": self.estado or "Activo",
             "enlace_doc": self.enlace_doc,
             "enlace_fluj": self.enlace_fluj,
             "enlace_fluj1": self.enlace_fluj1,
