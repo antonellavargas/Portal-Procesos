@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Usuarios | Procesos REFAX</title>
+  <link rel="icon" href="assets/img/logo-refax.png">
+  <link rel="stylesheet" href="assets/css/estilos.css">
+</head>
+<body>
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <h1>Usuarios</h1>
+        <div class="muted">Administración de accesos al Portal de Gestión de Procesos</div>
+      </div>
+      <button class="btn btn-primary" onclick="openUserForm()">+ Nuevo usuario</button>
+    </div>
+
+    <div id="msg" hidden></div>
+
+    <div class="security-note">
+      <strong>Contraseñas protegidas.</strong>
+      El administrador puede crear o restablecer contraseñas, pero la contraseña actual no se almacena ni se muestra en texto legible.
+    </div>
+
+    <div class="panel">
+      <div class="filters">
+        <input id="userSearch" class="input" placeholder="Buscar por nombre, usuario o rol...">
+        <button class="btn btn-secondary" onclick="loadUsers()">Buscar</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Estado</th>
+              <th>Contraseña</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="userRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div id="userModal" class="modal" hidden>
+    <div class="modal-card modal-sm">
+      <h2 id="userFormTitle">Nuevo usuario</h2>
+      <form id="userForm" class="form-grid">
+        <input id="user_id" type="hidden">
+        <label class="full">Nombre
+          <input id="user_nombre" class="input" required maxlength="150">
+        </label>
+        <label>Usuario
+          <input id="user_username" class="input" required maxlength="80" autocomplete="off">
+        </label>
+        <label>Rol
+          <select id="user_rol">
+            <option value="usuario">Consulta</option>
+            <option value="administrador">Administrador</option>
+          </select>
+        </label>
+        <label id="createPasswordField" class="full">Contraseña inicial
+          <input id="user_password" class="input" type="password" minlength="8" autocomplete="new-password">
+          <small class="muted">Mínimo 8 caracteres. El usuario no podrá cambiarla desde el portal.</small>
+        </label>
+        <div class="full toolbar">
+          <button class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" onclick="closeUserForm()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="passwordModal" class="modal" hidden>
+    <div class="modal-card modal-sm">
+      <h2>Asignar nueva contraseña</h2>
+      <p class="muted">Usuario: <b id="password_username"></b></p>
+      <form id="passwordForm">
+        <label>Nueva contraseña
+          <input id="new_password" class="input" type="password" minlength="8" required autocomplete="new-password">
+        </label>
+        <div class="toolbar" style="margin-top:16px">
+          <button class="btn btn-primary">Actualizar contraseña</button>
+          <button type="button" class="btn btn-secondary" onclick="closePasswordModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="credentialModal" class="modal" hidden>
+    <div class="modal-card credential-card">
+      <div class="credential-icon">🔐</div>
+      <h2>Credenciales asignadas</h2>
+      <p class="muted">Cópialas ahora. La contraseña no podrá consultarse después.</p>
+      <div class="credential-box">
+        <div><span>Usuario</span><strong id="credential_user"></strong></div>
+        <div><span>Contraseña</span><strong id="credential_password"></strong></div>
+      </div>
+      <div class="toolbar credential-actions">
+        <button class="btn btn-primary" type="button" onclick="copyCredential()">Copiar credenciales</button>
+        <button class="btn btn-secondary" type="button" onclick="closeCredentialModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/usuarios.js"></script>
+</body>
+</html>
