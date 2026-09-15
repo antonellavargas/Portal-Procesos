@@ -13,6 +13,8 @@ areas_bp = Blueprint("areas", __name__, url_prefix="/api/areas")
 @login_requerido
 def listar():
     q = (request.args.get("q") or "").strip()
+    area_id = request.args.get("area_id", type=int)
+    estado = (request.args.get("estado") or "").strip()
     query = Area.query.options(selectinload(Area.procesos))
     if q:
         patron = f"%{q}%"
@@ -24,6 +26,10 @@ def listar():
                 Area.nombre_personal.ilike(patron),
             )
         )
+    if area_id:
+        query = query.filter(Area.id == area_id)
+    if estado:
+        query = query.filter(Area.estado == estado)
     areas = query.order_by(Area.nombre.asc()).all()
     data = []
     for area in areas:
@@ -69,6 +75,7 @@ def crear():
         responsable_area=str(data.get("responsable_area", "")).strip() or None,
         nombre_personal=str(data.get("nombre_personal", "")).strip() or None,
         descripcion=str(data.get("descripcion", "")).strip() or None,
+        estado=str(data.get("estado", "Activo")).strip() or "Activo",
     )
     db.session.add(area)
     db.session.commit()
@@ -95,6 +102,7 @@ def editar(area_id):
     area.responsable_area = str(data.get("responsable_area", "")).strip() or None
     area.nombre_personal = str(data.get("nombre_personal", "")).strip() or None
     area.descripcion = str(data.get("descripcion", "")).strip() or None
+    area.estado = str(data.get("estado", "Activo")).strip() or "Activo"
     db.session.commit()
     return jsonify({"area": area.to_dict()})
 

@@ -101,12 +101,12 @@ def create_app():
 
     @app.cli.command("upgrade-estados")
     def upgrade_estados():
-        """Agrega el campo estado a Procesos y Documentos sin borrar datos existentes."""
+        """Agrega el campo estado a Áreas, Procesos y Documentos sin borrar datos existentes."""
         from sqlalchemy import inspect, text
 
         inspector = inspect(db.engine)
         cambios = []
-        for tabla in ("procesos", "documentos"):
+        for tabla in ("areas", "procesos", "documentos"):
             columnas = {col["name"] for col in inspector.get_columns(tabla)}
             if "estado" not in columnas:
                 db.session.execute(text(
@@ -116,6 +116,7 @@ def create_app():
         db.session.commit()
 
         # Los registros existentes quedan activos por defecto.
+        db.session.execute(text("UPDATE areas SET estado='Activo' WHERE estado IS NULL OR TRIM(estado)=''"))
         db.session.execute(text("UPDATE procesos SET estado='Activo' WHERE estado IS NULL OR TRIM(estado)=''"))
         db.session.execute(text("UPDATE documentos SET estado='Activo' WHERE estado IS NULL OR TRIM(estado)=''"))
         db.session.commit()
@@ -131,6 +132,7 @@ def create_app():
         from sqlalchemy import Index
 
         indexes = [
+            Index("ix_areas_estado_perf", models.Area.estado),
             Index("ix_procesos_area_id_perf", models.Proceso.area_id),
             Index("ix_procesos_tipo_perf", models.Proceso.tipo),
             Index("ix_procesos_critico_perf", models.Proceso.es_critico),

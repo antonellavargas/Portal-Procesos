@@ -44,6 +44,7 @@ class Area(db.Model):
     responsable_area = db.Column(db.String(150), nullable=True)
     nombre_personal = db.Column(db.String(150), nullable=True)
     descripcion = db.Column(db.Text, nullable=True)
+    estado = db.Column(db.String(20), nullable=False, default="Activo", index=True)
 
     procesos = db.relationship(
         "Proceso",
@@ -60,6 +61,7 @@ class Area(db.Model):
             "responsable_area": self.responsable_area,
             "nombre_personal": self.nombre_personal,
             "descripcion": self.descripcion,
+            "estado": self.estado or "Activo",
         }
 
 
