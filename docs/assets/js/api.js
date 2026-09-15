@@ -37,12 +37,14 @@ async function apiFetch(path, options = {}) {
   if (token) headers.set("Authorization", `Bearer ${token}`);
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000);
+  const timeoutMs = Number(options.timeoutMs || 20000);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   let response;
   try {
+    const { timeoutMs: _timeoutMs, ...fetchOptions } = options;
     response = await fetch(`${window.APP_CONFIG.API_URL}${path}`, {
-      ...options,
+      ...fetchOptions,
       headers,
       signal: options.signal || controller.signal,
     });
@@ -77,3 +79,5 @@ const apiPost = (path, body) => apiFetch(path, { method: "POST", body: JSON.stri
 const apiPut = (path, body) => apiFetch(path, { method: "PUT", body: JSON.stringify(body) });
 const apiPatch = (path, body) => apiFetch(path, { method: "PATCH", body: JSON.stringify(body) });
 const apiDelete = (path) => apiFetch(path, { method: "DELETE" });
+
+const apiPostLong = (path, body = {}) => apiFetch(path, { method: "POST", body: JSON.stringify(body), timeoutMs: 120000 });

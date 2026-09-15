@@ -13,6 +13,7 @@ from routes.documentos import documentos_bp
 from routes.dashboard import dashboard_bp
 from routes.reportes import reportes_bp
 from routes.usuarios import usuarios_bp
+from routes.sincronizacion import sincronizacion_bp
 
 # Importar modelos registra las tablas en SQLAlchemy.
 import models  # noqa: F401, E402
@@ -43,6 +44,7 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(reportes_bp)
     app.register_blueprint(usuarios_bp)
+    app.register_blueprint(sincronizacion_bp)
 
     @app.get("/")
     def root():
@@ -147,6 +149,12 @@ def create_app():
         for index in indexes:
             index.create(bind=db.engine, checkfirst=True)
         click.echo("Índices de rendimiento verificados correctamente.")
+
+    @app.cli.command("upgrade-sync")
+    def upgrade_sync():
+        """Crea la tabla de historial de sincronización si todavía no existe."""
+        db.create_all()
+        click.echo("Historial de sincronización verificado correctamente.")
 
     @app.cli.command("create-admin")
     @click.option("--username", prompt=True, help="Usuario administrador")

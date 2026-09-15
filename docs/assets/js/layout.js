@@ -36,13 +36,14 @@ function setLoading(targetId, columns = 1, text = "Cargando información...") {
 const PAGE_META = {
   dashboard: { title: "Dashboard", section: "Principal" },
   areas: { title: "Áreas", section: "Gestión" },
-  procesos: { title: "Procesos", section: "Gestión" },
+  procesos: { title: "Procesos", section: "Documentación" },
   documentos: { title: "Documentos", section: "Documentación" },
   guias: { title: "Guías", section: "Documentación" },
   manuales: { title: "Manuales", section: "Documentación" },
   politicas: { title: "Políticas", section: "Documentación" },
   reportes: { title: "Reportes", section: "Gestión" },
   usuarios: { title: "Usuarios", section: "Administración" },
+  sincronizacion: { title: "Sincronización", section: "Administración" },
 };
 
 function applySidebarState(collapsed) {
@@ -99,6 +100,7 @@ async function initLayout(active) {
   const adminLink = user.rol === "administrador"
     ? `<div class="nav-section"><div class="nav-section-title">Administración</div><nav>
          <a href="usuarios.html" data-key="usuarios" title="Usuarios"><span class="nav-icon">👥</span><span class="nav-label">Usuarios</span></a>
+         <a href="sincronizacion.html" data-key="sincronizacion" title="Sincronización"><span class="nav-icon">↻</span><span class="nav-label">Sincronización</span></a>
        </nav></div>`
     : "";
 
@@ -123,45 +125,18 @@ async function initLayout(active) {
         <div class="nav-section">
           <div class="nav-section-title">Gestión</div>
           <nav>
-            <a href="areas.html" data-key="areas" title="Áreas">
-              <span class="nav-icon">▦</span>
-              <span class="nav-label">Áreas</span>
-            </a>
-
-            <a href="reportes.html" data-key="reportes" title="Reportes">
-              <span class="nav-icon">▥</span>
-              <span class="nav-label">Reportes</span>
-            </a>
+            <a href="areas.html" data-key="areas" title="Áreas"><span class="nav-icon">▦</span><span class="nav-label">Áreas</span></a>
+            <a href="reportes.html" data-key="reportes" title="Reportes"><span class="nav-icon">▥</span><span class="nav-label">Reportes</span></a>
           </nav>
         </div>
-
         <div class="nav-section">
           <div class="nav-section-title">Documentación</div>
           <nav>
-            <a href="procesos.html" data-key="procesos" title="Procesos">
-              <span class="nav-icon">⚙</span>
-              <span class="nav-label">Procesos</span>
-            </a>
-
-            <a href="documentos.html" data-key="documentos" title="Documentos">
-              <span class="nav-icon">▤</span>
-              <span class="nav-label">Documentos</span>
-            </a>
-
-            <a href="guias.html" data-key="guias" title="Guías">
-              <span class="nav-icon">📘</span>
-              <span class="nav-label">Guías</span>
-            </a>
-
-            <a href="manuales.html" data-key="manuales" title="Manuales">
-              <span class="nav-icon">📙</span>
-              <span class="nav-label">Manuales</span>
-            </a>
-
-            <a href="politicas.html" data-key="politicas" title="Políticas">
-              <span class="nav-icon">📑</span>
-              <span class="nav-label">Políticas</span>
-            </a>
+            <a href="procesos.html" data-key="procesos" title="Procesos"><span class="nav-icon">⚙</span><span class="nav-label">Procesos</span></a>
+            <a href="documentos.html" data-key="documentos" title="Documentos"><span class="nav-icon">▤</span><span class="nav-label">Documentos</span></a>
+            <a href="guias.html" data-key="guias" title="Guías"><span class="nav-icon">⌁</span><span class="nav-label">Guías</span></a>
+            <a href="manuales.html" data-key="manuales" title="Manuales"><span class="nav-icon">▣</span><span class="nav-label">Manuales</span></a>
+            <a href="politicas.html" data-key="politicas" title="Políticas"><span class="nav-icon">◆</span><span class="nav-label">Políticas</span></a>
           </nav>
         </div>
         ${adminLink}

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -143,4 +143,33 @@ class Documento(db.Model):
             "enlace_fluj1": self.enlace_fluj1,
             "enlace_fluj2": self.enlace_fluj2,
             "enlace_fluj3": self.enlace_fluj3,
+        }
+
+
+class Sincronizacion(db.Model):
+    __tablename__ = "sincronizaciones"
+
+    id = db.Column(db.Integer, primary_key=True)
+    fuente = db.Column(db.String(40), nullable=False, default="Microsoft Graph")
+    archivo = db.Column(db.String(255), nullable=True)
+    estado = db.Column(db.String(30), nullable=False, default="Completada")
+    iniciado_en = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    finalizado_en = db.Column(db.DateTime, nullable=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey("usuarios.id"), nullable=True)
+    mensaje = db.Column(db.Text, nullable=True)
+    detalle_json = db.Column(db.Text, nullable=True)
+
+    usuario = db.relationship("Usuario", lazy=True)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "fuente": self.fuente,
+            "archivo": self.archivo,
+            "estado": self.estado,
+            "iniciado_en": self.iniciado_en.isoformat() if self.iniciado_en else None,
+            "finalizado_en": self.finalizado_en.isoformat() if self.finalizado_en else None,
+            "usuario": self.usuario.to_dict() if self.usuario else None,
+            "mensaje": self.mensaje,
+            "detalle_json": self.detalle_json,
         }

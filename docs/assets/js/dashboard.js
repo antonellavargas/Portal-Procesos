@@ -1,10 +1,44 @@
+function formatSyncDate(value) {
+  if (!value) return "Nunca";
+  const date = new Date(`${value}Z`);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString("es-PE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+async function loadDashboardSync(user) {
+  if (user.rol !== "administrador") return;
+  try {
+    const sync = await apiGet("/api/sincronizacion?check_graph=0");
+    dashboardSync.hidden = false;
+    const last = sync.ultima;
+    if (last) {
+      const who = last.usuario?.nombre || last.usuario?.username || "Administrador";
+      dashboardSyncText.textContent = `${formatSyncDate(last.finalizado_en || last.iniciado_en)} · ${last.estado} · ${who}`;
+    } else {
+      dashboardSyncText.textContent = "Aún no se ha ejecutado una sincronización desde OneDrive/SharePoint.";
+    }
+  } catch (_) {
+    // La sincronización es informativa y nunca debe bloquear el Dashboard.
+    dashboardSync.hidden = true;
+  }
+}
+
 (async () => {
-  if (!await initLayout("dashboard")) return;
+  const user = await initLayout("dashboard");
+  if (!user) return;
   setLoading("areasBars", 1, "Cargando resumen...");
   setLoading("criticos", 1, "Cargando procesos críticos...");
   setLoading("recentes", 5, "Cargando procesos recientes...");
+  loadDashboardSync(user);
   try {
     const data = await apiGet("/api/dashboard");
+
     kAreas.textContent = data.kpis.areas;
     kProcesos.textContent = data.kpis.procesos;
     kCriticos.textContent = `${data.kpis.criticos} (${data.kpis.porcentaje_criticos}%)`;
