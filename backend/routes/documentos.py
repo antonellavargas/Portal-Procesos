@@ -28,6 +28,9 @@ def full(documento):
             "codigo": documento.proceso.codigo,
             "nombre": documento.proceso.nombre,
             "area_id": documento.proceso.area_id,
+            "es_critico": documento.proceso.es_critico,
+            "estado": documento.proceso.estado or "Activo",
+            "estado_visual": "Crítico" if documento.proceso.es_critico else "Activo",
             "area": documento.proceso.area.to_dict() if documento.proceso.area else None,
         }
         if documento.proceso
@@ -44,7 +47,17 @@ def listar():
     tipo = (request.args.get("tipo") or "").strip()
     area_id = request.args.get("area_id", type=int)
     estado = (request.args.get("estado") or "").strip()
-    query = Documento.query.options(selectinload(Documento.proceso)).join(Proceso)
+    query = (
+        Documento.query.options(selectinload(Documento.proceso))
+        .join(Proceso)
+        .join(Area, Proceso.area_id == Area.id)
+    )
+    # Los registros inactivos permanecen en la BD, pero no se muestran.
+    query = query.filter(
+        func.lower(Documento.estado) != "inactivo",
+        func.lower(Proceso.estado) != "inactivo",
+        func.lower(Area.estado) != "inactivo",
+    )
     if proceso_id:
         query = query.filter(Documento.proceso_id == proceso_id)
     if area_id:
@@ -52,7 +65,11 @@ def listar():
     if tipo:
         query = query.filter(func.lower(Documento.tipo) == tipo.lower())
     if estado:
-        query = query.filter(func.lower(Documento.estado) == estado.lower())
+        estado_normalizado = estado.strip().lower().replace("í", "i")
+        if estado_normalizado == "critico":
+            query = query.filter(Proceso.es_critico.is_(True))
+        elif estado_normalizado == "activo":
+            query = query.filter(Proceso.es_critico.is_(False))
     if q:
         patron = f"%{q}%"
         query = query.filter(
@@ -79,8 +96,16 @@ def meta():
         .order_by(Documento.tipo)
         .all()
     ]
-    procesos = Proceso.query.order_by(Proceso.nombre).all()
-    areas = Area.query.order_by(Area.nombre).all()
+    procesos = (
+        Proceso.query.join(Area)
+        .filter(
+            func.lower(Proceso.estado) != "inactivo",
+            func.lower(Area.estado) != "inactivo",
+        )
+        .order_by(Proceso.nombre)
+        .all()
+    )
+    areas = Area.query.filter(func.lower(Area.estado) != "inactivo").order_by(Area.nombre).all()
     return jsonify(
         {
             "procesos": [

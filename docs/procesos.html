@@ -15,12 +15,12 @@
     <div class="filters filters-content">
       <input id="q" class="input" placeholder="Buscar por nombre del proceso...">
       <select id="areaFilter"><option value="">Todas las áreas</option></select>
-      <select id="estadoFilter"><option value="">Todos los estados</option><option value="Activo">Activo</option><option value="Inactivo">Inactivo</option></select>
+      <select id="estadoFilter"><option value="">Todos</option><option value="Activo">Activo</option><option value="Crítico">Crítico</option></select>
       <button class="btn btn-secondary" onclick="load()">Filtrar</button>
     </div>
     <div class="table-wrap compact-table-wrap">
       <table class="table compact-table">
-        <thead><tr><th>Proceso</th><th>Área</th><th>Estado</th><th class="admin-only-column">Acciones</th></tr></thead>
+        <thead><tr><th>Proceso</th><th>Área</th><th>Estado</th><th>Archivos</th><th class="admin-only-column">Acciones</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
