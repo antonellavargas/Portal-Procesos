@@ -153,19 +153,6 @@ async function initLayout(active) {
   document.querySelector(`[data-key="${active}"]`)?.classList.add("active");
   injectUtilityBar(active, user);
 
-  if (user.rol !== "administrador") {
-    const page = document.querySelector("main.page");
-    if (page && active !== "dashboard") {
-      page.insertAdjacentHTML(
-        "beforeend",
-        ""
-      );
-      page.insertAdjacentHTML(
-        "afterbegin",
-        `<div class="readonly-note"><strong>Modo solo lectura.</strong> Tu perfil de Usuario puede visualizar y consultar la información, pero no crear, editar ni eliminar registros.</div>`
-      );
-    }
-  }
   document.querySelectorAll(".admin-only, .admin-only-column").forEach((x) => (x.hidden = user.rol !== "administrador"));
 
   applySidebarState(localStorage.getItem(SIDEBAR_KEY) === "1");
