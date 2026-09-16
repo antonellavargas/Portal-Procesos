@@ -11,6 +11,20 @@ function formatSyncDate(value) {
   });
 }
 
+function getDisplayFirstName(user) {
+  const base = (user?.nombre || user?.username || "Usuario").trim();
+  return base.split(/\s+/)[0] || base;
+}
+
+function applyDashboardGreeting(user) {
+  const firstName = getDisplayFirstName(user);
+  const greeting = document.getElementById("dashboardGreeting");
+  const welcome = document.getElementById("dashboardWelcome");
+  const badge = document.getElementById("dashboardUserBadge");
+  if (greeting) greeting.textContent = `Hola ${firstName}!`;
+  if (welcome) welcome.textContent = "Bienvenida al Portal de Gestión de Procesos.";
+  if (badge) badge.textContent = `Usuario: ${user.username || "-"}`;
+}
 async function loadDashboardSync(user) {
   if (user.rol !== "administrador") return;
   try {
@@ -32,6 +46,7 @@ async function loadDashboardSync(user) {
 (async () => {
   const user = await initLayout("dashboard");
   if (!user) return;
+  applyDashboardGreeting(user);
   setLoading("areasBars", 1, "Cargando resumen...");
   setLoading("criticos", 1, "Cargando procesos críticos...");
   setLoading("recentes", 5, "Cargando procesos recientes...");

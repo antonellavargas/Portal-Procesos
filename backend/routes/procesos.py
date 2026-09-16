@@ -20,17 +20,10 @@ def fecha(value):
         return None
 
 
-def _es_activo(valor):
-    return str(valor or "Activo").strip().lower() != "inactivo"
-
-
 def full(proceso):
     data = proceso.to_dict()
     data["area"] = proceso.area.to_dict() if proceso.area else None
-    documentos_visibles = [d for d in proceso.documentos if _es_activo(d.estado)]
-    data["documentos"] = [d.to_dict() for d in documentos_visibles]
-    data["total_documentos"] = len(documentos_visibles)
-    data["estado_visual"] = "Crítico" if proceso.es_critico else "Activo"
+    data["total_documentos"] = len(proceso.documentos)
     return data
 
 
@@ -46,11 +39,6 @@ def listar():
         selectinload(Proceso.area),
         selectinload(Proceso.documentos),
     ).join(Area)
-    # Los inactivos se conservan en BD, pero no se muestran en los listados.
-    query = query.filter(
-        func.lower(Proceso.estado) != "inactivo",
-        func.lower(Area.estado) != "inactivo",
-    )
     if q:
         patron = f"%{q}%"
         query = query.filter(
@@ -71,11 +59,7 @@ def listar():
     if critico in ("0", "false", "no"):
         query = query.filter(Proceso.es_critico.is_(False))
     if estado:
-        estado_normalizado = estado.strip().lower().replace("í", "i")
-        if estado_normalizado == "critico":
-            query = query.filter(Proceso.es_critico.is_(True))
-        elif estado_normalizado == "activo":
-            query = query.filter(Proceso.es_critico.is_(False))
+        query = query.filter(func.lower(Proceso.estado) == estado.lower())
     return jsonify({"procesos": [full(x) for x in query.order_by(Proceso.nombre.asc()).all()]})
 
 
@@ -90,7 +74,7 @@ def meta():
         .order_by(Proceso.tipo)
         .all()
     ]
-    areas = Area.query.filter(func.lower(Area.estado) != "inactivo").order_by(Area.nombre).all()
+    areas = Area.query.order_by(Area.nombre).all()
     return jsonify({"areas": [a.to_dict() for a in areas], "tipos": tipos})
 
 
@@ -99,12 +83,7 @@ def meta():
 def criticos():
     procesos = (
         Proceso.query.options(selectinload(Proceso.area), selectinload(Proceso.documentos))
-        .join(Area)
-        .filter(
-            Proceso.es_critico.is_(True),
-            func.lower(Proceso.estado) != "inactivo",
-            func.lower(Area.estado) != "inactivo",
-        )
+        .filter_by(es_critico=True)
         .order_by(Proceso.nombre)
         .all()
     )
@@ -121,7 +100,9 @@ def detalle(pid):
     )
     if not proceso:
         return jsonify({"error": "Proceso no encontrado"}), 404
-    return jsonify({"proceso": full(proceso)})
+    data = full(proceso)
+    data["documentos"] = [x.to_dict() for x in proceso.documentos]
+    return jsonify({"proceso": data})
 
 
 def validar(data, pid=None):
