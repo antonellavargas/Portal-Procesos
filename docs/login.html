@@ -11,41 +11,46 @@
 <body>
   <div class="login-layout">
     <section class="login-side">
-      <div>
+      <div class="login-hero">
         <div class="login-brand"><img src="assets/img/logo-refax.png" alt="REFAX"></div>
         <div class="login-copy clean">
           <span class="login-kicker">Portal interno REFAX Perú</span>
           <h1>Portal de Gestión de Procesos</h1>
         </div>
         <div class="login-visual" aria-hidden="true">
+          <div class="login-visual-glow"></div>
           <div class="login-visual-main">
-            <div class="visual-icon">📄</div>
-            <div class="visual-lines">
+            <div class="visual-header">
+              <div class="visual-icon">📄</div>
+              <div class="visual-chip">Documentación</div>
+            </div>
+            <div class="visual-lines visual-lines-strong">
               <span></span><span></span><span></span>
+            </div>
+            <div class="visual-mini-grid">
+              <div class="mini-card"><span></span><b>Procesos</b></div>
+              <div class="mini-card"><span></span><b>Áreas</b></div>
+              <div class="mini-card"><span></span><b>Documentos</b></div>
             </div>
           </div>
           <div class="login-floating-card floating-a">
             <div class="floating-dot"></div>
             <div class="floating-lines"><span></span><span></span></div>
           </div>
-          <div class="login-floating-card floating-b">
+          <div class="login-floating-card floating-b accent">
             <div class="floating-dot"></div>
             <div class="floating-lines"><span></span><span></span></div>
           </div>
-          <div class="login-floating-card floating-c">
-            <div class="floating-dot"></div>
-            <div class="floating-lines"><span></span><span></span></div>
-          </div>
+          <div class="login-floating-pill">Control interno</div>
         </div>
       </div>
-      <div class="muted">REFAX Perú · Plataforma interna de gestión</div>
     </section>
 
     <section class="login-card-wrap">
-      <main class="login-card">
+      <main class="login-card login-card-enhanced">
+        <div class="login-card-icon">🗂️</div>
         <div class="eyebrow">Bienvenida</div>
         <h2>Iniciar sesión</h2>
-        <p>Ingresa con tu usuario autorizado para acceder al portal.</p>
 
         <form id="loginForm">
           <label for="username">Usuario
@@ -59,8 +64,6 @@
           <button id="submitBtn" class="btn btn-primary" type="submit">Ingresar</button>
           <div id="msg"></div>
         </form>
-
-        <div class="login-helper">Si tienes problemas de acceso, solicita apoyo al administrador del portal.</div>
       </main>
     </section>
   </div>
