@@ -3,102 +3,288 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Login | Portal de Procesos</title>
+
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon-docs.svg">
   <link rel="stylesheet" href="assets/css/estilos.css">
+
   <meta name="theme-color" content="#f58220">
 </head>
+
 <body>
+
   <div class="login-layout">
+
+    <!-- =========================
+         LADO IZQUIERDO / PORTADA
+    ========================== -->
     <section class="login-side">
+
       <div class="login-hero">
-        <div class="login-brand"><img src="assets/img/logo-refax.png" alt="REFAX"></div>
+
+        <div class="login-brand">
+          <img src="assets/img/logo-refax.png" alt="REFAX">
+        </div>
+
         <div class="login-copy clean">
           <span class="login-kicker">REFAX Perú</span>
-          <h1>Portal de Gestión de Procesos</h1>
+
+          <h1>
+            Portal de Gestión de Procesos
+          </h1>
         </div>
+
+        <!-- Ilustración -->
         <div class="login-visual" aria-hidden="true">
+
           <div class="login-visual-glow"></div>
+
           <div class="login-visual-main">
+
             <div class="visual-header">
-              <div class="visual-icon">📄</div>
-              <div class="visual-chip">Documentación</div>
+
+              <div class="visual-icon">
+                📄
+              </div>
+
+              <div class="visual-chip">
+                Documentación
+              </div>
+
             </div>
+
             <div class="visual-lines visual-lines-strong">
-              <span></span><span></span><span></span>
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
+
             <div class="visual-mini-grid">
-              <div class="mini-card"><span></span><b>Procesos</b></div>
-              <div class="mini-card"><span></span><b>Guías</b></div>
-              <div class="mini-card"><span></span><b>Manuales</b></div>
-              <div class="mini-card"><span></span><b>Políticas</b></div>
-              <div class="mini-card"><span></span><b>Documentos</b></div>
+
+              <div class="mini-card">
+                <span></span>
+                <b>Procesos</b>
+              </div>
+
+              <div class="mini-card">
+                <span></span>
+                <b>Guías</b>
+              </div>
+
+              <div class="mini-card">
+                <span></span>
+                <b>Manuales</b>
+              </div>
+
+              <div class="mini-card">
+                <span></span>
+                <b>Políticas</b>
+              </div>
+
+              <div class="mini-card">
+                <span></span>
+                <b>Documentos</b>
+              </div>
+
             </div>
+
           </div>
+
+          <!-- Tarjeta flotante superior -->
           <div class="login-floating-card floating-a">
+
             <div class="floating-dot"></div>
-            <div class="floating-lines"><span></span><span></span></div>
+
+            <div class="floating-lines">
+              <span></span>
+              <span></span>
+            </div>
+
           </div>
+
+          <!-- Tarjeta flotante inferior -->
           <div class="login-floating-card floating-b accent">
+
             <div class="floating-dot"></div>
-            <div class="floating-lines"><span></span><span></span></div>
+
+            <div class="floating-lines">
+              <span></span>
+              <span></span>
+            </div>
+
           </div>
-          <div class="login-floating-pill">Control interno</div>
+
         </div>
+
       </div>
+
     </section>
 
+
+    <!-- =========================
+         LOGIN
+    ========================== -->
     <section class="login-card-wrap">
+
       <main class="login-card login-card-enhanced">
-        <div class="login-card-icon">🗂️</div>
-        <div class="eyebrow">Bienvenida</div>
-        <h2>Iniciar sesión</h2>
+
+        <div class="login-card-icon">
+          🗂️
+        </div>
+
+        <div class="eyebrow">
+          Bienvenida
+        </div>
+
+        <h2>
+          Iniciar sesión
+        </h2>
 
         <form id="loginForm">
-          <label for="username">Usuario
-            <input id="username" name="username" class="input" autocomplete="username" required>
+
+          <label for="username">
+            Usuario
+
+            <input
+              id="username"
+              name="username"
+              class="input"
+              autocomplete="username"
+              required
+            >
           </label>
 
-          <label for="password">Contraseña
-            <input id="password" name="password" class="input" type="password" autocomplete="current-password" required>
+
+          <label for="password">
+            Contraseña
+
+            <input
+              id="password"
+              name="password"
+              class="input"
+              type="password"
+              autocomplete="current-password"
+              required
+            >
           </label>
 
-          <button id="submitBtn" class="btn btn-primary" type="submit">Ingresar</button>
+
+          <button
+            id="submitBtn"
+            class="btn btn-primary"
+            type="submit"
+          >
+            Ingresar
+          </button>
+
+
           <div id="msg"></div>
+
         </form>
+
       </main>
+
     </section>
+
   </div>
+
+
+  <!-- =========================
+       SCRIPTS
+  ========================== -->
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/api.js"></script>
   <script src="assets/js/auth.js"></script>
+
+
   <script>
+
+    /*
+      Si el usuario ya tiene sesión iniciada,
+      enviarlo directamente al dashboard.
+    */
+
     if (getAccessToken()) {
-      getCurrentUser().then(() => location.href = "dashboard.html").catch(clearAccessToken);
+
+      getCurrentUser()
+        .then(() => {
+          location.href = "dashboard.html";
+        })
+        .catch(() => {
+          clearAccessToken();
+        });
+
     }
 
-    document.getElementById("loginForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const msg = document.getElementById("msg");
-      const button = document.getElementById("submitBtn");
-      msg.textContent = "";
-      button.disabled = true;
-      button.textContent = "Ingresando...";
 
-      try {
-        await login(
-          document.getElementById("username").value.trim(),
-          document.getElementById("password").value
-        );
-        location.href = "dashboard.html";
-      } catch (error) {
-        msg.textContent = error.message || "No fue posible iniciar sesión.";
-      } finally {
-        button.disabled = false;
-        button.textContent = "Ingresar";
-      }
-    });
+    /*
+      LOGIN
+    */
+
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        const msg =
+          document.getElementById("msg");
+
+        const button =
+          document.getElementById("submitBtn");
+
+
+        msg.textContent = "";
+
+        button.disabled = true;
+
+        button.textContent =
+          "Ingresando...";
+
+
+        try {
+
+          await login(
+
+            document
+              .getElementById("username")
+              .value
+              .trim(),
+
+            document
+              .getElementById("password")
+              .value
+
+          );
+
+
+          location.href =
+            "dashboard.html";
+
+
+        }
+        catch (error) {
+
+          msg.textContent =
+            error.message ||
+            "No fue posible iniciar sesión.";
+
+        }
+        finally {
+
+          button.disabled = false;
+
+          button.textContent =
+            "Ingresar";
+
+        }
+
+      });
+
   </script>
+
 </body>
 </html>
